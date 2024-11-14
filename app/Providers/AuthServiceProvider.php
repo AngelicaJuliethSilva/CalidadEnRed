@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Gate; // Descomentado para usar Gate
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        // Aquí podrías mapear políticas de modelos, si las tuvieras.
     ];
 
     /**
@@ -21,6 +21,9 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Definir el Gate para el acceso a evaluaciones
+        Gate::define('access-evaluations', function ($user) {
+            return $user->hasRole('admin'); // Solo usuarios con el rol 'admin' pueden acceder
+        });
     }
 }

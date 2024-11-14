@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ForumTopic extends Model
 {
     protected $fillable = ['title', 'content', 'user_id'];
-
+    
     // Relación con el usuario
     public function user()
     {

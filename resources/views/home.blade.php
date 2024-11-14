@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <!-- Agregar el logo -->
                     <div class="text-center mb-4">
-                        <img src="{{ asset('assets/logo.png') }}" alt="Logo" style="width: 150px; height: auto;">
+                        <img src="{{ asset('assets/logo.png') }}" alt="Logo" style="width: 350px; height: auto;">
                     </div>
 
                     @if (session('status'))
@@ -26,6 +26,11 @@
                         <li class="nav-item">
                             <a class="nav-link" id="results-tab" data-bs-toggle="tab" href="#results" role="tab" aria-controls="results" aria-selected="false">Resultados</a>
                         </li>
+                        @if(auth()->user()->administrative_role === 'yes')
+                        <li class="nav-item">
+                            <a class="nav-link" id="evaluations-tab" href="{{ route('evaluations.index') }}">Nueva Evaluación</a>
+                        </li>
+                        @endif                        
                     </ul>
 
                     <!-- Contenido de las pestañas -->
@@ -54,7 +59,6 @@
                                         @endif
 
                                         <!-- Formulario para nueva respuesta -->
-                                        
                                         <form action="{{ route('forum.reply.store', $topic->id) }}" method="POST">
                                             @csrf
                                             <div class="mb-3">
