@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -88,9 +89,69 @@
 
                         <!-- Contenido Resultados -->
                         <div class="tab-pane fade" id="results" role="tabpanel" aria-labelledby="results-tab">
-                            <h3>Resultados</h3>
-                            <p>Aquí se mostrarán los resultados de las evaluaciones.</p>
-                            <!-- Puedes agregar una tabla o gráfica con resultados -->
+                            <h3>Resultados de Calidad</h3>
+                            
+                            
+                            <div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            Evaluaciones de {{ auth()->user()->name }}
+        </div>
+        <div class="card-body">
+        <p><strong>Tú promedio de Nota:</strong> {{ $averageScore ?? 'No hay evaluaciones' }}</p>
+        <p><strong>Cantidad de Evaluaciones Realizadas:</strong> {{ $evaluationCount ?? 0 }}</p>
+        </div>
+        <div class="container">
+    <h1 class="text-center">Promedio General de Evaluaciones</h1>
+    <h2 class="text-center">Recuerda Nuestra Meta es 90</h2>
+
+    <!-- Contenedor de la gráfica -->
+    <canvas id="generalAverageChart" width="400" height="200"></canvas>
+</div>
+
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Configuración de datos para la gráfica
+    const data = {
+        labels: ['Promedio General'], // Etiqueta única
+        datasets: [{
+            label: 'Promedio de Notas',
+            data: [{{ $averageGeneral ?? 0 }}], // Valor del promedio general
+            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Color de fondo
+            borderColor: 'rgba(75, 192, 192, 1)', // Color del borde
+            borderWidth: 1 // Grosor del borde
+        }]
+    };
+
+    // Configuración de la gráfica
+    const config = {
+        type: 'bar', // Gráfica de barras
+        data: data,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true // Iniciar eje Y desde cero
+                }
+            }
+        }
+    };
+
+    // Crear y renderizar la gráfica
+    const ctx = document.getElementById('generalAverageChart').getContext('2d');
+    new Chart(ctx, config);
+</script>
+@endsection        
+    </div>
+    <div class="text-center mt-4">
+    @if ($averageGeneral >= 90)
+        <p class="text-success"><strong>¡Estamos cumpliendo la meta!</strong> El promedio general es de <strong>{{ $averageGeneral }}</strong>, lo cual supera la meta de 90 puntos.</p>
+    @else
+        <p class="text-danger"><strong>No estamos cumpliendo la meta.</strong> El promedio general es de <strong>{{ $averageGeneral }}</strong>, necesitamos mejorar para alcanzar la meta de 90 puntos.</p>
+    @endif
+</div>
+</div>
+                          
                         </div>
                     </div>
                 </div>

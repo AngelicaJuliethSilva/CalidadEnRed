@@ -54,5 +54,14 @@ class User extends Authenticatable
     {
         return $this->role === $role; // Compara el rol del usuario con el rol proporcionado
     }
+    public function evaluationsGiven()
+    {
+        return $this->hasMany(Evaluation::class, 'evaluator_id');
+    }
+
+    public function evaluationsReceived()
+    {
+        return $this->hasMany(Evaluation::class, 'evaluated_id');
+    }
 }
 

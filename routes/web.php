@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\EvaluationController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,3 +29,6 @@ Route::post('/forum', [ForumController::class, 'store'])->name('forum.store');
 Route::post('/forum/{topic}/reply', [ForumController::class, 'storeReply'])->name('forum.reply.store');
 Route::get('/evaluations', [EvaluationController::class, 'index'])->name('evaluations.index');
 Route::post('/evaluations', [EvaluationController::class, 'store'])->name('evaluations.store');
+Route::get('/evaluations/report', [EvaluationController::class, 'generateReport'])->name('evaluations.generateReport');
+Route::get('/evaluaciones/reporte', [EvaluationController::class, 'generateReport'])->name('evaluations.generateReport');
+
